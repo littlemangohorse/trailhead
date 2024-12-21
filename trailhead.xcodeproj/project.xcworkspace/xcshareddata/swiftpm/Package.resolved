@@ -1,0 +1,15 @@
+{
+  "originHash" : "e3bed9738a2b9565a127f52f36edfbc49c571f565851615227332eee0428d7c7",
+  "pins" : [
+    {
+      "identity" : "glossy",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/littlemangohorse/Glossy.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "7714b29091d3327258400d1ddd0cc3df83bcf8a9"
+      }
+    }
+  ],
+  "version" : 3
+}
