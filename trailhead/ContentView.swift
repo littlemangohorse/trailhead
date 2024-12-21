@@ -16,21 +16,25 @@ struct ContentView: View {
     var body: some View {
         VStack(alignment: .leading) {
             Text(Date().formatted(date: .abbreviated, time: .omitted).description)
-                .font(.title)
+                .font(.largeTitle)
                 .fontWeight(.bold)
             
             // Top overview text
-            HStack {
+            Group {
                 let name = stableUser?.name ?? "User"
                 let taskCount = stableUser?.tasks.count ?? 0 <= 0 ? "no" : stableUser?.tasks.count.description
                 let taskIcon = Image(systemName: "checklist")
                 let habitCount = stableUser?.habits.count ?? 0 <= 0 ? "no" : stableUser?.habits.count.description
                 let habitIcon = Image(systemName: "point.forward.to.point.capsulepath.fill")
                 
-                Text("Hello, \(name)! \(Image(systemName: "heart.fill")), you have \(taskIcon) \(taskCount!) tasks and \(habitIcon) \(habitCount!) habits to complete today.")
-                    .padding(.top, 3)
+                Group {
+                    Text("Hello, ").foregroundStyle(.secondary) + Text("\(name)\(symbol("heart.fill")) ") +
+                    Text("You have ").foregroundStyle(.secondary) + Text("\(taskIcon) \(taskCount!) tasks ") +
+                    Text("and ").foregroundStyle(.secondary) + Text("\(habitIcon) \(habitCount!) habits.")
+                }
+                .font(.title3)
+                .fontWeight(.semibold)
             }
-            
             
             // Task List View
             
@@ -40,7 +44,6 @@ struct ContentView: View {
             
             
         }
-        .padding(.horizontal)
         .onAppear {
             initializeUser()
         }
@@ -61,6 +64,10 @@ struct ContentView: View {
             }
         }
     }
+}
+
+func symbol(_ name: String) -> Image {
+    return Image(systemName: name)
 }
 
 #Preview {
