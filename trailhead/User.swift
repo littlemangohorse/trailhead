@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftData
+import SwiftUI
 
 // MARK: User model
 // 2 Main static reservoirs of information: Tasks, added on one-time bases, and Habits, daily recurring tasks.
@@ -15,15 +16,15 @@ import SwiftData
 // The user model includes a Preference model to store basic information such as customization options: TBD.
 
 @Model
-final class User {
+final class User: Identifiable {
     var joinDate: Date
     var name: String
     var tasks: [Task]
     var habits: [Habit]
-    var prefs: Preference
+    var prefs: Preferences
     var classes: [Class]
     
-    init(joinDate: Date, name: String, tasks: [Task], habits: [Habit], prefs: Preference, classes: [Class]) {
+    init(joinDate: Date, name: String, tasks: [Task], habits: [Habit], prefs: Preferences, classes: [Class]) {
         self.joinDate = joinDate
         self.name = name
         self.tasks = tasks
@@ -38,7 +39,7 @@ final class User {
 
 @Model
 final class Task: Identifiable {
-    var id: Int
+    var id: UUID
     var title: String
     var details: String
     var dueDate: Date?
@@ -47,7 +48,7 @@ final class Task: Identifiable {
     var frequency: Frequency?
     var classes: [Class]?
     
-    init(id: Int, title: String, details: String, dueDate: Date? = nil, completed: Bool, recurring: Bool, frequency: Frequency? = nil, classes: [Class]? = nil) {
+    init(id: UUID, title: String, details: String, dueDate: Date? = nil, completed: Bool, recurring: Bool, frequency: Frequency? = nil, classes: [Class]? = nil) {
         self.id = id
         self.title = title
         self.details = details
@@ -104,7 +105,7 @@ final class Habit: Identifiable {
 // MARK: Preference Model
 
 @Model
-final class Preference {
+final class Preferences {
     var isNotificationsEnabled: Bool
     
     init(isNotificationsEnabled: Bool) {
