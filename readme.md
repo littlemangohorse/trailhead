@@ -6,6 +6,10 @@ Trailhead is a concept app by me to tackle my worst problem: I can't organize my
 
 Trailhead is organized into a single view: The Living Room. Here I take inspiration from the apps Kyo and Joi, both gorgeously designed projects. At the bottom, the action panel with every conceivable setting and function you can do in the app. The top screen is a snapshot window of everything you need to do.
 
+## Under The Hood
+
+TH uses a multivariable function structure that I've never seen before so I'm going to call it innovative. This structure allows TH to grow and add features more easily. The order of development revolves around the Function object -> Item View (in Action Drawer) -> Display Sheet for the action.
+
 ### Roadmap
 
 Phase 1: Core Features
