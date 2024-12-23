@@ -9,7 +9,8 @@ import SwiftUI
 import SwiftData
 
 struct TaskCard: View {
-    @Binding var task: Task
+    @Bindable var task: Task
+    @State var user: User
     
     var body: some View {
         HStack {
@@ -39,6 +40,28 @@ struct TaskCard: View {
                 .padding()
 
         }
-        .basicStyle()
+            .padding(3.5)
+            .background(
+                RoundedRectangle(cornerRadius: 16)
+                    .stroke(Color.primary.opacity(0.05), lineWidth: 1.8)
+                    .fill(Color.secondary.opacity(0.2))
+            )
+        .id(task.id)
+        .contextMenu {
+            Text(task.details)
+            
+            Button {
+                print("Remove")
+                user.tasks.remove(at: user.tasks.firstIndex(of: task)!)
+            } label: {
+                Label("Delete", systemImage: "minus.circle")
+            }
+            
+            Button {
+                print("Edit")
+            } label: {
+                Label("Edit", systemImage: "pencil")
+            }
+        }
     }
 }

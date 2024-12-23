@@ -36,16 +36,23 @@ extension FunctionDrawer {
                 .onSubmit {
                     self.isFullScreen = false
                 }
-                
-            
-            List {
-                if self.isFullScreen {
-                    ForEach(self.functions, id: \.id) { function in
-                        FunctionItemView(function: function)
-                    }.listRowBackground(Color.clear)
-                    .listRowSeparator(.hidden)
+            if self.isFullScreen {
+                VStack {
+                    List {
+                        
+                        ForEach(self.functions, id: \.id) { function in
+                            FunctionItemView(function: function)
+                        }.listRowBackground(Color.clear)
+                        .listRowSeparator(.hidden)
+                        
+                        ForEach(self.user.tasks, id: \.id) { task in
+                            TaskCard(task: task, user: self.user)
+                        }.listRowBackground(Color.clear)
+                        .listRowSeparator(.hidden)
+                        
+                    }.listStyle(.plain)
                 }
-            }.listStyle(.plain)
+            }
         }
     }
 }

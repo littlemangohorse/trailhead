@@ -38,7 +38,7 @@ final class User: Identifiable {
 // Includes ID for pulling, Title and Details, relevant date (if applicable,) due date, completion and recurrance (frequency as well,) and the associated class.
 
 @Model
-final class Task: Identifiable {
+final class Task: Identifiable, Equatable {
     var id: UUID
     var title: String
     var details: String

@@ -13,6 +13,7 @@ struct NewTaskEditSheet: View {
     @State var title: String = ""
     @State var details: String = ""
     @State var recurring: Bool = false
+    @Environment(\.presentationMode) var presentationMode
     var body: some View {
         let newTask = Task(id: UUID(), title: title, details: details, completed: false, recurring: recurring)
         
@@ -21,17 +22,20 @@ struct NewTaskEditSheet: View {
                 .basicStyle()
             TextField(text: $details, label: { Text("Details") })
                 .basicStyle()
-            Toggle(isOn: $recurring) { Text("Recurring") }
+            Toggle(isOn: $recurring) { Text("Recurring").foregroundStyle(.secondary) }
+                .basicStyle()
             
             Spacer()
             
             Button {
                 print("Save logic")
                 user.tasks.append(newTask)
+                self.presentationMode.wrappedValue.dismiss()
             } label: {
                 Text("Save")
                     .basicStyle()
             }.padding(.bottom)
+            .buttonStyle(.plain)
 
         }
         

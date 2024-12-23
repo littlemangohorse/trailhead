@@ -47,7 +47,7 @@ struct trailheadApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView(user: user ?? basicUser)
+            ContentView(user: user ?? basicUser, tasks: user?.tasks ?? [])
         }
         .modelContainer(sharedModelContainer)
     }
