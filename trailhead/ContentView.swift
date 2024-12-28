@@ -49,6 +49,10 @@ struct ContentView: View {
     @ViewBuilder
     private var sheetContent: some View {
         FunctionDrawer(selectedDetent: self.$selectedDetent, user: user, functions: [])
+            .presentationCornerRadius(30)
+            .interactiveDismissDisabled()
+            .background(.ultraThinMaterial)
+            .presentationBackgroundInteraction(.enabled(upThrough: .large))
     }
     
     
