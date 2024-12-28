@@ -6,12 +6,14 @@
 //
 
 import SwiftUI
+import SwiftData
 import Glossy
 
 struct FunctionDrawer: View {
     @Binding var selectedDetent: PresentationDetent
     @State private var searchText: String = ""
     @State var user: User
+    @Query var tasks: [Task]
     @State var functions: [Function]
     
     init(selectedDetent: Binding<PresentationDetent>, user: User, functions: [Function]) {
@@ -19,7 +21,7 @@ struct FunctionDrawer: View {
         self.user = user
         self.functions = [
             Function(id: UUID(), name: "Name Edit", icon: "pencil", sheet: AnyView(UserNameEditSheet(user: user))),
-            Function(id: UUID(), name: "New Task", icon: "plus", sheet: AnyView(NewTaskEditSheet(user: user))),
+            Function(id: UUID(), name: "New Task", icon: "plus", sheet: AnyView(NewTaskEditSheet())),
         ]
     }
 }
@@ -41,12 +43,12 @@ extension FunctionDrawer {
             
             VStack {
                 List {
-                    ForEach(self.functions, id: \.id) { function in
+                    ForEach(self.functions.filter{$0.name.lowercased().contains(searchText.lowercased()) || searchText == ""}, id: \.id) { function in
                         FunctionItemView(function: function)
                     }.listRowBackground(Color.clear)
                     .listRowSeparator(.hidden)
                     
-                    ForEach(self.user.tasks, id: \.id) { task in
+                    ForEach(self.tasks.filter{$0.title.lowercased().contains(searchText.lowercased()) || searchText == ""}, id: \.id) { task in
                         TaskCard(task: task, user: self.user)
                     }.listRowBackground(Color.clear)
                     .listRowSeparator(.hidden)

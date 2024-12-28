@@ -14,10 +14,21 @@ struct EditTaskSheet: View {
     @Bindable var task: Task
     
     var body: some View {
-        Form {
+        VStack {
+            Text("Edit \(task.title)")
+                .font(.title3)
+            
             TextField("Title", text: $task.title)
+                .basicStyle()
             TextField("Description", text: $task.details)
+                .basicStyle()
             Toggle("Completed", isOn: $task.completed)
-        }
+                .basicStyle()
+            
+//            DatePicker("Select a date", selection: $task.dueDate)
+//                .datePickerStyle(.graphical)
+            
+            Spacer()
+        }.padding(.vertical)
     }
 }

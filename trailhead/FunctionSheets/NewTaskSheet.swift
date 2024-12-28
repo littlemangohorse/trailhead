@@ -9,13 +9,15 @@ import SwiftUI
 import SwiftData
 
 struct NewTaskEditSheet: View {
-    @Bindable var user: User
+    @Query var tasks: [Task]
     @State var title: String = ""
     @State var details: String = ""
     @State var recurring: Bool = false
+    @State var date: Date = Date()
     @Environment(\.presentationMode) var presentationMode
+    @Environment(\.modelContext) private var modelContext
     var body: some View {
-        let newTask = Task(id: UUID(), title: title, details: details, completed: false, recurring: recurring)
+        let newTask = Task(id: UUID(), title: title, details: details, dueDate: Date(), completed: false, recurring: recurring)
         
         VStack {
             TextField(text: $title, label: { Text("Title") })
@@ -25,17 +27,31 @@ struct NewTaskEditSheet: View {
             Toggle(isOn: $recurring) { Text("Recurring").foregroundStyle(.secondary) }
                 .basicStyle()
             
+//            DatePicker("Select a date", selection: $date)
+//                .datePickerStyle(.graphical)
+            
+            
+            
             Spacer()
             
-            Button {
-                print("Save logic")
-                user.tasks.append(newTask)
-                self.presentationMode.wrappedValue.dismiss()
-            } label: {
-                Text("Save")
-                    .basicStyle()
-            }.padding(.bottom)
-            .buttonStyle(.plain)
+            HStack {
+                Button {
+                    self.presentationMode.wrappedValue.dismiss()
+                } label: {
+                    Text("Cancel")
+                        .basicStyle()
+                }.padding(.bottom)
+                .buttonStyle(.plain)
+                
+                Button {
+                    modelContext.insert(newTask)
+                    self.presentationMode.wrappedValue.dismiss()
+                } label: {
+                    Text("Save")
+                        .basicStyle()
+                }.padding(.bottom)
+                .buttonStyle(.plain)
+            }
 
         }
         

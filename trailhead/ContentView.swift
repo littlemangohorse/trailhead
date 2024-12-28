@@ -11,9 +11,8 @@ import Glossy
 
 struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
-    @Query var users: [User]
+    @Query var tasks: [Task]
     @State var user: User
-    @State var tasks: [Task]
     @State var selectedDetent: PresentationDetent = .height(100)
     
     var body: some View {
@@ -36,11 +35,6 @@ struct ContentView: View {
                 sheetContent
                     .ignoresSafeArea()
                     .presentationDetents([.height(100), .large], selection: $selectedDetent.animation(.snappy.speed(2.9)))
-            }.onAppear {
-                initUser()
-            }
-            .onChange(of: user.tasks) { oldValue, newValue in
-                tasks = user.tasks
             }
             
         }.frame(maxWidth: .infinity)
@@ -56,19 +50,6 @@ struct ContentView: View {
     }
     
     
-    func initUser() {
-        withAnimation {
-            if users.isEmpty {
-                print("Creating new Jane Doe...")
-                let newUserPreferences = Preferences(isNotificationsEnabled: true)
-                let newUser = User(joinDate: Date(), name: "Jane Doe", tasks: [], habits: [], prefs: newUserPreferences, classes: [])
-                self.modelContext.insert(newUser)
-                user = newUser
-            }
-        }
-    }
-    
-    
 }
 
 func symbol(_ name: String) -> Image {
@@ -76,6 +57,6 @@ func symbol(_ name: String) -> Image {
 }
 
 #Preview {
-    ContentView(user: basicUser, tasks: [])
+    ContentView(user: basicUser)
         .modelContainer(for: User.self, inMemory: true)
 }

@@ -11,13 +11,18 @@ import SwiftData
 struct TaskCard: View {
     @Bindable var task: Task
     @State var user: User
+    @Query var tasks: [Task]
     @State var displayEditSheet: Bool = false
+    @Environment(\.modelContext) private var modelContext
     
     var body: some View {
         HStack {
             Text(task.title)
                 .font(.headline)
                 .padding()
+                .onTapGesture {
+                    self.displayEditSheet.toggle()
+                }
             
             Spacer()
             
@@ -53,7 +58,7 @@ struct TaskCard: View {
             
             Button {
                 print("Remove")
-                user.tasks.remove(at: user.tasks.firstIndex(of: task)!)
+                modelContext.delete(task)
             } label: {
                 Label("Delete", systemImage: "minus.circle")
             }
