@@ -20,14 +20,6 @@ struct ContentView: View {
             VStack {
                 WelcomeText(user: $user)
                 
-                // Task List View
-                
-                ScrollView {
-                    ForEach(tasks) { task in
-                        TaskCard(task: task, user: user)
-                    }
-                }.padding(.horizontal)
-                
                 Spacer()
                 
             }

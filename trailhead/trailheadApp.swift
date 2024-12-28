@@ -73,18 +73,18 @@ struct trailheadApp: App {
             
             let users = try modelContext.fetch(fetchDescriptor)
             
-            for user in users {
-                print("User: \(user.name)")
-                self.user = user
-                print(self.user?.name ?? "NO USER ASSIGNED")
-            }
-            
             if users.isEmpty {
                 print("Creating new Jane Doe...")
                 let newUserPreferences = Preferences(isNotificationsEnabled: true)
                 let newUser = User(joinDate: Date(), name: "Jane Doe", prefs: newUserPreferences, classes: [])
                 modelContext.insert(newUser)
                 self.user = newUser
+            } else {
+                for user in users {
+                    print("User: \(user.name)")
+                    self.user = user
+                    print(self.user?.name ?? "NO USER ASSIGNED")
+                }
             }
         } catch {
             fatalError("Failed to initialize model container.")

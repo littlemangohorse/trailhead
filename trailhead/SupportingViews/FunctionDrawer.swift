@@ -43,13 +43,16 @@ extension FunctionDrawer {
             
             VStack {
                 List {
-                    ForEach(self.functions.filter{$0.name.lowercased().contains(searchText.lowercased()) || searchText == ""}, id: \.id) { function in
-                        FunctionItemView(function: function)
-                    }.listRowBackground(Color.clear)
-                    .listRowSeparator(.hidden)
                     
                     ForEach(self.tasks.filter{$0.title.lowercased().contains(searchText.lowercased()) || searchText == ""}, id: \.id) { task in
-                        TaskCard(task: task, user: self.user)
+                        ObjectCard(task: task, user: self.user)
+                    }.listRowBackground(Color.clear)
+                    .listRowSeparator(.hidden)
+                
+                    
+                    
+                    ForEach(self.functions.filter{$0.name.lowercased().contains(searchText.lowercased()) || searchText == ""}, id: \.id) { function in
+                        FunctionItemView(function: function)
                     }.listRowBackground(Color.clear)
                     .listRowSeparator(.hidden)
                     

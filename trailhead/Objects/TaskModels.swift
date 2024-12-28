@@ -50,8 +50,8 @@ enum ModelSchemaV2: VersionedSchema {
     static var models: [any PersistentModel.Type] {
         [
             Self.Task.self,
-            User.self,
-            Habit.self
+            ModelSchemaV1.User.self,
+            ModelSchemaV1.Habit.self
         ]
     }
     
@@ -99,8 +99,8 @@ enum ModelSchemaMigrationPlan: SchemaMigrationPlan {
             for task in oldTasks {
                 let newTask = ModelSchemaV2.Task(id: task.id, title: task.title, details: task.details, date: task.dueDate ?? Date(), completed: task.completed, recurring: task.recurring)
                 
-                context.delete(task)
                 context.insert(newTask)
+                context.delete(task)
             }
             try? context.save()
             

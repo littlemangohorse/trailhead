@@ -8,7 +8,7 @@
 import SwiftUI
 import SwiftData
 
-struct TaskCard: View {
+struct ObjectCard: View {
     @Bindable var task: Task
     @State var user: User
     @Query var tasks: [Task]
