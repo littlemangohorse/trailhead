@@ -17,7 +17,7 @@ struct NewTaskEditSheet: View {
     @Environment(\.presentationMode) var presentationMode
     @Environment(\.modelContext) private var modelContext
     var body: some View {
-        let newTask = Task(id: UUID(), title: title, details: details, dueDate: Date(), completed: false, recurring: recurring)
+        let newTask = Task(id: UUID(), title: title, details: details, date: Date(), completed: false, recurring: recurring)
         
         VStack {
             TextField(text: $title, label: { Text("Title") })

@@ -25,7 +25,7 @@ struct EditTaskSheet: View {
             Toggle("Completed", isOn: $task.completed)
                 .basicStyle()
             
-//            DatePicker("Select a date", selection: $task.dueDate)
+//            DatePicker("Select a date", selection: $task.date)
 //                .datePickerStyle(.graphical)
             
             Spacer()

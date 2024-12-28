@@ -8,7 +8,7 @@
 import SwiftData
 
 @Model
-final class Frequency: Identifiable {
+class Frequency: Identifiable {
     var id: Int
     var name: String
     var days: [Day]
@@ -21,7 +21,7 @@ final class Frequency: Identifiable {
 }
 
 @Model
-final class Day: Identifiable {
+class Day: Identifiable {
     var id: Int
     var name: String
     
@@ -32,9 +32,8 @@ final class Day: Identifiable {
 }
 
 // MARK: Preference Model
-
 @Model
-final class Preferences {
+class Preferences {
     var isNotificationsEnabled: Bool
     
     init(isNotificationsEnabled: Bool) {
@@ -44,9 +43,8 @@ final class Preferences {
 
 
 // MARK: Class and Teacher Models
-
 @Model
-final class Class: Identifiable {
+class Class: Identifiable {
     var id: Int
     var name: String
     var instructors: [Instructor]
@@ -61,9 +59,8 @@ final class Class: Identifiable {
         self.color = color
     }
 }
-
 @Model
-final class Instructor: Identifiable {
+class Instructor: Identifiable {
     var id: Int
     var name: String
     var email: String
