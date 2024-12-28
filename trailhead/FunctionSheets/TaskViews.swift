@@ -11,6 +11,7 @@ import SwiftData
 struct TaskCard: View {
     @Bindable var task: Task
     @State var user: User
+    @State var displayEditSheet: Bool = false
     
     var body: some View {
         HStack {
@@ -59,9 +60,13 @@ struct TaskCard: View {
             
             Button {
                 print("Edit")
+                self.displayEditSheet.toggle()
             } label: {
                 Label("Edit", systemImage: "pencil")
             }
+        }
+        .sheet(isPresented: $displayEditSheet) {
+            EditTaskSheet(task: self.task)
         }
     }
 }

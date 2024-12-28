@@ -6,21 +6,21 @@
 //
 
 import SwiftUI
+import Glossy
 
 struct FunctionDrawer: View {
+    @Binding var selectedDetent: PresentationDetent
     @State private var searchText: String = ""
     @State var user: User
     @State var functions: [Function]
-    @State var isFullScreen: Bool
     
-    init(searchText: String, user: User, functions: [Function], isFullScreen: Bool) {
-        self.searchText = searchText
+    init(selectedDetent: Binding<PresentationDetent>, user: User, functions: [Function]) {
+        _selectedDetent = selectedDetent
         self.user = user
         self.functions = [
             Function(id: UUID(), name: "Name Edit", icon: "pencil", sheet: AnyView(UserNameEditSheet(user: user))),
             Function(id: UUID(), name: "New Task", icon: "plus", sheet: AnyView(NewTaskEditSheet(user: user))),
         ]
-        self.isFullScreen = isFullScreen
     }
 }
 
@@ -29,34 +29,36 @@ extension FunctionDrawer {
         VStack {
             TextField("Search an action, setting, or item", text: $searchText, onEditingChanged: { editing in
                 if editing {
-                    self.isFullScreen = true
+                    self.selectedDetent = .large
                 }
             })
                 .basicStyle()
                 .onSubmit {
-                    self.isFullScreen = false
+                    if self.searchText.isEmpty {
+                        self.selectedDetent = .height(100)
+                    }
                 }
-            if self.isFullScreen {
-                VStack {
-                    List {
-                        
-                        ForEach(self.functions, id: \.id) { function in
-                            FunctionItemView(function: function)
-                        }.listRowBackground(Color.clear)
-                        .listRowSeparator(.hidden)
-                        
-                        ForEach(self.user.tasks, id: \.id) { task in
-                            TaskCard(task: task, user: self.user)
-                        }.listRowBackground(Color.clear)
-                        .listRowSeparator(.hidden)
-                        
-                    }.listStyle(.plain)
-                }
-            }
+            
+            VStack {
+                List {
+                    ForEach(self.functions, id: \.id) { function in
+                        FunctionItemView(function: function)
+                    }.listRowBackground(Color.clear)
+                    .listRowSeparator(.hidden)
+                    
+                    ForEach(self.user.tasks, id: \.id) { task in
+                        TaskCard(task: task, user: self.user)
+                    }.listRowBackground(Color.clear)
+                    .listRowSeparator(.hidden)
+                    
+                }.listStyle(.plain)
+                    .background(Color.clear)
+            }.blur(radius: self.selectedDetent == .height(100) ? 20 : 0)
         }
     }
 }
 
 #Preview {
-    FunctionDrawer(searchText: "", user: basicUser, functions: [], isFullScreen: true)
+    @Previewable @State var selectedDetent: PresentationDetent = .height(100)
+    FunctionDrawer(selectedDetent: $selectedDetent, user: basicUser, functions: [])
 }

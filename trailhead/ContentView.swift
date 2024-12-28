@@ -14,7 +14,7 @@ struct ContentView: View {
     @Query var users: [User]
     @State var user: User
     @State var tasks: [Task]
-    @State private var selectedDetent: PresentationDetent = .height(100)
+    @State var selectedDetent: PresentationDetent = .height(100)
     
     var body: some View {
         ZStack {
@@ -34,6 +34,7 @@ struct ContentView: View {
             }
             .sheet(isPresented: .constant(true)) {
                 sheetContent
+                    .ignoresSafeArea()
                     .presentationDetents([.height(100), .large], selection: $selectedDetent.animation(.snappy.speed(2.9)))
             }.onAppear {
                 initUser()
@@ -47,29 +48,7 @@ struct ContentView: View {
     
     @ViewBuilder
     private var sheetContent: some View {
-        switch selectedDetent {
-        case .large:
-            FunctionDrawer(searchText: "", user: user, functions: [], isFullScreen: true)
-                .presentationCornerRadius(30)
-                .interactiveDismissDisabled()
-                .presentationBackground(.clear)
-                .background(.ultraThinMaterial)
-                .presentationBackgroundInteraction(.enabled(upThrough: .large))
-        case .height(100):
-            FunctionDrawer(searchText: "", user: user, functions: [], isFullScreen: false)
-                .presentationCornerRadius(30)
-                .interactiveDismissDisabled()
-                .presentationBackground(.clear)
-                .background(.ultraThinMaterial)
-                .presentationBackgroundInteraction(.enabled(upThrough: .large))
-        default:
-            FunctionDrawer(searchText: "", user: user, functions: [], isFullScreen: true)
-                .presentationCornerRadius(30)
-                .interactiveDismissDisabled()
-                .presentationBackground(.clear)
-                .background(.ultraThinMaterial)
-                .presentationBackgroundInteraction(.enabled(upThrough: .large))
-        }
+        FunctionDrawer(selectedDetent: self.$selectedDetent, user: user, functions: [])
     }
     
     

@@ -14,9 +14,22 @@
 		668B93122D14B22800CEDC77 /* trailhead.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = trailhead.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		66CCFAB62D1F6EC7005678F0 /* Exceptions for "trailhead" folder in "trailhead" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 668B93112D14B22800CEDC77 /* trailhead */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		668B93142D14B22800CEDC77 /* trailhead */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				66CCFAB62D1F6EC7005678F0 /* Exceptions for "trailhead" folder in "trailhead" target */,
+			);
 			path = trailhead;
 			sourceTree = "<group>";
 		};
@@ -261,7 +274,8 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = Trailhead;
+				INFOPLIST_FILE = trailhead/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Chickenfish;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
@@ -302,7 +316,8 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = Trailhead;
+				INFOPLIST_FILE = trailhead/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Chickenfish;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
