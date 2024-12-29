@@ -13,7 +13,7 @@ struct FunctionDrawer: View {
     @Binding var selectedDetent: PresentationDetent
     @State private var searchText: String = ""
     @State var user: User
-    @Query var tasks: [Task]
+    @Query var objects: [Object]
     @State var functions: [Function]
     
     init(selectedDetent: Binding<PresentationDetent>, user: User, functions: [Function]) {
@@ -44,8 +44,8 @@ extension FunctionDrawer {
             VStack {
                 List {
                     
-                    ForEach(self.tasks.filter{$0.title.lowercased().contains(searchText.lowercased()) || searchText == ""}, id: \.id) { task in
-                        ObjectCard(task: task, user: self.user)
+                    ForEach(self.objects.filter{$0.name.lowercased().contains(searchText.lowercased()) || searchText == ""}, id: \.id) { object in
+                        ObjectCard(object: object, user: self.user)
                     }.listRowBackground(Color.clear)
                     .listRowSeparator(.hidden)
                 

@@ -10,16 +10,16 @@ import SwiftData
 import Vortex
 
 struct ObjectCard: View {
-    @Bindable var task: Task
+    @Bindable var object: Object
     @State var user: User
-    @Query var tasks: [Task]
+    @Query var objects: [Object]
     @State var displayEditSheet: Bool = false
     @Environment(\.modelContext) private var modelContext
     
     var body: some View {
         VortexViewReader { proxy in
             HStack {
-                Text(task.title)
+                Text(object.name)
                     .font(.headline)
                     .padding()
                     .onTapGesture {
@@ -28,50 +28,30 @@ struct ObjectCard: View {
                 
                 Spacer()
                 
-                Group {
-                    if task.completed {
-                        ZStack {
-                            VortexView(.magic) {
-                                Circle()
-                                    .fill(.green)
-                                    .blendMode(.plusLighter)
-                                    .tag("sparkle")
-                                    .opacity(0.03)
-                            }
-                            symbol("checkmark.circle.fill")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: 24, height: 24)
-                        }.frame(width: 45, height: 45, alignment: .trailing)
-                    } else {
-                        symbol("checkmark.circle")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 24, height: 24, alignment: .trailing)
-                    }
-                }.onTapGesture { location in
-                    withAnimation {
-                        proxy.attractTo(location)
-                        proxy.burst()
-                        task.completed.toggle()
-                    }
+                switch object.type {
+                case .task:
+                    taskButtons
+                case .event:
+                    symbol("calendar")
+                case .habit:
+                    symbol("point.forward.to.point.capsulepath.fill")
+                case .unknown:
+                    symbol("questionmark")
                 }
-                .sensoryFeedback(.selection, trigger: task.completed)
-                .padding(.trailing)
             }
             .padding(3.5)
             .background(
                 RoundedRectangle(cornerRadius: 16)
-                    .stroke(task.completed ? Color.green.opacity(0.2) : Color.primary.opacity(0.2), lineWidth: 1.8)
+                    .stroke(object.completed ? Color.green.opacity(0.2) : Color.primary.opacity(0.2), lineWidth: 1.8)
                     .fill(Color.secondary.opacity(0.2))
             )
-            .id(task.id)
+            .id(object.id)
             .contextMenu {
-                Text(task.details)
+                Text(object.details)
                 
                 Button {
                     print("Remove")
-                    modelContext.delete(task)
+                    modelContext.delete(object)
                 } label: {
                     Label("Delete", systemImage: "minus.circle")
                 }
@@ -84,8 +64,44 @@ struct ObjectCard: View {
                 }
             }
             .sheet(isPresented: $displayEditSheet) {
-                EditTaskSheet(task: self.task)
+                EditTaskSheet(object: object)
             }
         }
     }
+    
+    var taskButtons: some View {
+        VortexViewReader { proxy in
+            Group {
+                if object.completed {
+                    ZStack {
+                        VortexView(.magic) {
+                            Circle()
+                                .fill(.green)
+                                .blendMode(.plusLighter)
+                                .tag("sparkle")
+                                .opacity(0.03)
+                        }
+                        symbol("checkmark.circle.fill")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 24, height: 24)
+                    }.frame(width: 45, height: 45, alignment: .trailing)
+                } else {
+                    symbol("checkmark.circle")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 24, height: 24, alignment: .trailing)
+                }
+            }.onTapGesture { location in
+                withAnimation {
+                    proxy.attractTo(location)
+                    proxy.burst()
+                    object.completed.toggle()
+                }
+            }
+            .sensoryFeedback(.selection, trigger: object.completed)
+            .padding(.trailing)
+        }
+    }
+    
 }

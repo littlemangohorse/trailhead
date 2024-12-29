@@ -9,7 +9,7 @@ import SwiftUI
 import SwiftData
 
 struct NewTaskEditSheet: View {
-    @Query var tasks: [Task]
+    @Query var tasks: [Object]
     @State var title: String = ""
     @State var details: String = ""
     @State var recurring: Bool = false
@@ -17,7 +17,7 @@ struct NewTaskEditSheet: View {
     @Environment(\.presentationMode) var presentationMode
     @Environment(\.modelContext) private var modelContext
     var body: some View {
-        let newTask = Task(id: UUID(), title: title, details: details, date: Date(), completed: false, recurring: recurring)
+        let newTask = Object(id: UUID(), eventIdString: nil, type: .task, name: title, completed: false, details: details, date: date)
         
         VStack {
             TextField(text: $title, label: { Text("Title") })
@@ -27,8 +27,8 @@ struct NewTaskEditSheet: View {
             Toggle(isOn: $recurring) { Text("Recurring").foregroundStyle(.secondary) }
                 .basicStyle()
             
-//            DatePicker("Select a date", selection: $date)
-//                .datePickerStyle(.graphical)
+            DatePicker("Select a date", selection: $date)
+                .datePickerStyle(.graphical)
             
             
             

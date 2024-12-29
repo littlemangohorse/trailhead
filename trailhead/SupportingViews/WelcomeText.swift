@@ -10,12 +10,10 @@ import SwiftData
 import EventKit
 
 struct WelcomeText: View {
+    @Environment(\.modelContext) private var modelContext
     @Binding var user: User
-    @Query var tasks: [Task]
-    @Query var habits: [Habit]
-    
-    var store = EKEventStore()
-    @State var events: [EKEvent] = []
+    @Query var objects: [Object]
+//    @State var events: [EKEvent] = []
     
     var body: some View {
         VStack(alignment: .leading, spacing: 15) {
@@ -51,15 +49,9 @@ struct WelcomeText: View {
             let habitIcon = Image(systemName: "point.forward.to.point.capsulepath.fill")
             let calIcon = Image(systemName: "calendar")
             
-            let busyness = if tasks.count + habits.count > 0 {
-                Text("not too busy")
-            } else if tasks.count + habits.count > 5 {
-                Text("busy")
-            } else if tasks.count + habits.count > 10 {
-                Text("really busy")
-            } else {
-                Text("free")
-            }
+            let tasks = objects.filter( { $0.type == .task })
+            let events = objects.filter( { $0.type == .event })
+            let habits = objects.filter( { $0.type == .habit })
 //
             Group {
                 Text("Hello, ").foregroundStyle(.secondary) +
@@ -74,25 +66,43 @@ struct WelcomeText: View {
             .fontWeight(.semibold)
         }.padding(.horizontal)
             .onAppear {
-                requestAccessToCalendar()
-                todaysEvents()
+                Task {
+                    await todaysEvents()
+                }
             }
     }
     
-    func requestAccessToCalendar() {
+    func todaysEvents() async {
+        // Create an event store
+        let store = EKEventStore()
+
+        // Request full access
         store.requestFullAccessToEvents { granted, fail in
             print(granted)
         }
-    }
-    
-    func todaysEvents() {
-            let calendar = Calendar.autoupdatingCurrent
-            let startDate = Date.now
-            var onDayComponents = DateComponents()
-            onDayComponents.day = 1
-            let endDate = calendar.date(byAdding: onDayComponents, to: .now)!
-            let predicate = store.predicateForEvents(withStart: startDate, end: endDate, calendars: nil)
-            events = store.events(matching: predicate)
+
+        // Create a predicate
+        guard let interval = Calendar.current.dateInterval(of: .day, for: Date.now) else { return }
+        let predicate = store.predicateForEvents(withStart: interval.start, end: interval.end, calendars: nil)
+
+        // Fetch the events
+        
+        for event in store.events(matching: predicate) {
+            print("EKEVENTS TODAY: \(String(describing: event.title))")
             
+            let newEvent = Object(id: UUID(), eventIdString: event.eventIdentifier, type: .event, name: event.title, completed: true, details: event.notes ?? "", date: event.startDate, startDate: event.startDate, endDate: event.endDate)
+            
+            for storedEvent in objects.filter( { $0.type == .event } ) {
+                if storedEvent.eventIdString == event.eventIdentifier {
+                    modelContext.delete(storedEvent)
+                }
+            }
+            
+            modelContext.insert(newEvent)
         }
+        
+//        for storedEvents in objects.filter( { $0.type == .event } ) {
+//            modelContext.delete(storedEvents)
+//        }
+    }
 }

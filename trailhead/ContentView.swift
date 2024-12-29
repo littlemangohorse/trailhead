@@ -11,7 +11,7 @@ import Glossy
 
 struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
-    @Query var tasks: [Task]
+    @Query var tasks: [Object]
     @State var user: User
     @State var selectedDetent: PresentationDetent = .height(100)
     

@@ -64,7 +64,7 @@ struct trailheadApp: App {
         // Task Management
         do {
             sharedContainer = try ModelContainer(
-                for: Task.self, User.self, Habit.self,
+                for: Object.self, User.self,
                 migrationPlan: ModelSchemaMigrationPlan.self
             )
             

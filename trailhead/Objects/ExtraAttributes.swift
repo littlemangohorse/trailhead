@@ -8,37 +8,6 @@
 import SwiftData
 import SwiftUI
 
-struct Event: Identifiable {
- let id: UUID = UUID()
- let title: String
- let date: Date
- let description: String
-}
-
-@Model
-class Frequency: Identifiable {
-    var id: Int
-    var name: String
-    var days: [Day]
-    
-    init(id: Int, name: String, days: [Day]) {
-        self.id = id
-        self.name = name
-        self.days = days
-    }
-}
-
-@Model
-class Day: Identifiable {
-    var id: Int
-    var name: String
-    
-    init(id: Int, name: String) {
-        self.id = id
-        self.name = name
-    }
-}
-
 // MARK: Preference Model
 @Model
 class Preferences {
