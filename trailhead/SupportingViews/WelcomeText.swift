@@ -49,6 +49,7 @@ struct WelcomeText: View {
             // Top overview text
             let taskIcon = Image(systemName: "checkmark.square")
             let habitIcon = Image(systemName: "point.forward.to.point.capsulepath.fill")
+            let calIcon = Image(systemName: "calendar")
             
             let busyness = if tasks.count + habits.count > 0 {
                 Text("not too busy")
@@ -65,11 +66,11 @@ struct WelcomeText: View {
                 Text("\(user.name). ") +
                 Text("You have ").foregroundStyle(.secondary) +
                 Text("\(taskIcon) \(tasks.count) \(tasks.count == 1 ? "task" : "tasks"), ") +
-                Text("\(events.count) events,") +
+                Text("\(calIcon) \(events.count) \(events.count == 1 ? "event" : "events"), ") +
                 Text("and ").foregroundStyle(.secondary) +
                 Text("\(habitIcon) \(habits.count) habits today. ")
             }
-            .font(.title)
+            .font(.largeTitle)
             .fontWeight(.semibold)
         }.padding(.horizontal)
             .onAppear {
