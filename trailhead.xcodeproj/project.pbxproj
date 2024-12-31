@@ -279,7 +279,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = trailhead/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = Goldfish;
+				INFOPLIST_KEY_CFBundleDisplayName = Chickenfish;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_NSCalendarsUsageDescription = "Goldfish needs to access your calendar to provide event data.";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
@@ -322,7 +322,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = trailhead/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = Goldfish;
+				INFOPLIST_KEY_CFBundleDisplayName = Chickenfish;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_NSCalendarsUsageDescription = "Goldfish needs to access your calendar to provide event data.";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
