@@ -19,12 +19,21 @@ struct ObjectCard: View {
     var body: some View {
         VortexViewReader { proxy in
             HStack {
-                Text(object.name)
-                    .font(.headline)
-                    .padding()
-                    .onTapGesture {
-                        self.displayEditSheet.toggle()
-                    }
+                
+                VStack(alignment: .leading) {
+                    
+//                    Text(object.date.formatted(.dateTime.weekday(.abbreviated).month(.abbreviated).day())).textCase(.uppercase)
+                    Text(object.date.formatted(.dateTime.hour().minute())).textCase(.uppercase)
+                        .font(.caption)
+                    Text(object.name)
+                        .font(.headline)
+                    
+                }
+                .padding(.leading)
+                .padding(.vertical, 5)
+                .onTapGesture {
+                    self.displayEditSheet.toggle()
+                }
                 
                 Spacer()
                 

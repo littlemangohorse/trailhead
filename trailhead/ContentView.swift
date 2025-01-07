@@ -20,6 +20,18 @@ struct ContentView: View {
             VStack {
                 WelcomeText(user: $user)
                 
+                let calendar = Calendar.current
+                let today = Date()
+
+                let filteredTasks = tasks.filter {
+                    calendar.isDate($0.date, inSameDayAs: today)
+                }.sorted(by: { $0.date < $1.date })
+                
+                ForEach(filteredTasks) { task in
+                    ObjectCard(object: task, user: user) // Replace with your content for the task
+                        .padding(.horizontal)
+                }
+                
                 Spacer()
                 
             }
