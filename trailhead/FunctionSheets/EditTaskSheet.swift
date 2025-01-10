@@ -14,21 +14,23 @@ struct EditTaskSheet: View {
     @Bindable var object: Object
     
     var body: some View {
-        VStack {
-            Text("Edit \(object.name)")
-                .font(.title3)
-            
-            TextField("Title", text: $object.name)
-                .basicStyle()
-            TextField("Description", text: $object.details)
-                .basicStyle()
-            Toggle("Completed", isOn: $object.completed)
-                .basicStyle()
-            
-            DatePicker("Select a date", selection: $object.date)
-                .datePickerStyle(.graphical)
-            
-            Spacer()
-        }.padding(.vertical)
+        ScrollView {
+            VStack {
+                Text("Edit \(object.name)")
+                    .font(.title3)
+                
+                TextField("Title", text: $object.name)
+                    .basicStyle()
+                TextField("Description", text: $object.details)
+                    .basicStyle()
+                Toggle("Completed", isOn: $object.completed)
+                    .basicStyle()
+                
+                DatePicker("Select a date", selection: $object.date)
+                    .datePickerStyle(.graphical)
+                
+                Spacer()
+            }.padding(.vertical)
+        }
     }
 }

@@ -22,9 +22,11 @@ struct ObjectCard: View {
                 
                 VStack(alignment: .leading) {
                     
-//                    Text(object.date.formatted(.dateTime.weekday(.abbreviated).month(.abbreviated).day())).textCase(.uppercase)
-                    Text(object.date.formatted(.dateTime.hour().minute())).textCase(.uppercase)
-                        .font(.caption)
+                    if object.type == .event {
+                        Text(object.date.formatted(.dateTime.hour().minute())).textCase(.uppercase)
+                            .font(.caption)
+                    }
+                    
                     Text(object.name)
                         .font(.headline)
                     
@@ -37,16 +39,18 @@ struct ObjectCard: View {
                 
                 Spacer()
                 
-                switch object.type {
-                case .task:
-                    taskButtons
-                case .event:
-                    symbol("calendar")
-                case .habit:
-                    symbol("point.forward.to.point.capsulepath.fill")
-                case .unknown:
-                    symbol("questionmark")
-                }
+                Group {
+                    switch object.type {
+                    case .task:
+                        taskButtons
+                    case .event:
+                        symbol("calendar")
+                    case .habit:
+                        symbol("point.forward.to.point.capsulepath.fill")
+                    case .unknown:
+                        symbol("questionmark")
+                    }
+                }.padding(.trailing)
             }
             .padding(3.5)
             .background(
@@ -109,7 +113,6 @@ struct ObjectCard: View {
                 }
             }
             .sensoryFeedback(.selection, trigger: object.completed)
-            .padding(.trailing)
         }
     }
     

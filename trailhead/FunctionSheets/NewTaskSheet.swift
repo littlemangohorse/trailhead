@@ -19,42 +19,44 @@ struct NewTaskEditSheet: View {
     var body: some View {
         let newTask = Object(id: UUID(), eventIdString: nil, type: .task, name: title, completed: false, details: details, date: date)
         
-        VStack {
-            TextField(text: $title, label: { Text("Title") })
-                .basicStyle()
-            TextField(text: $details, label: { Text("Details") })
-                .basicStyle()
-            Toggle(isOn: $recurring) { Text("Recurring").foregroundStyle(.secondary) }
-                .basicStyle()
-            
-            DatePicker("Select a date", selection: $date)
-                .datePickerStyle(.graphical)
-            
-            
-            
-            Spacer()
-            
-            HStack {
-                Button {
-                    self.presentationMode.wrappedValue.dismiss()
-                } label: {
-                    Text("Cancel")
-                        .basicStyle()
-                }.padding(.bottom)
-                .buttonStyle(.plain)
+        ScrollView {
+            VStack {
+                TextField(text: $title, label: { Text("Title") })
+                    .basicStyle()
+                TextField(text: $details, label: { Text("Details") })
+                    .basicStyle()
+                Toggle(isOn: $recurring) { Text("Recurring").foregroundStyle(.secondary) }
+                    .basicStyle()
                 
-                Button {
-                    modelContext.insert(newTask)
-                    self.presentationMode.wrappedValue.dismiss()
-                } label: {
-                    Text("Save")
-                        .basicStyle()
-                }.padding(.bottom)
-                .buttonStyle(.plain)
+                DatePicker("Select a date", selection: $date)
+                    .datePickerStyle(.graphical)
+                
+                
+                
+                Spacer()
+                
+                HStack {
+                    Button {
+                        self.presentationMode.wrappedValue.dismiss()
+                    } label: {
+                        Text("Cancel")
+                            .basicStyle()
+                    }.padding(.bottom)
+                    .buttonStyle(.plain)
+                    
+                    Button {
+                        modelContext.insert(newTask)
+                        self.presentationMode.wrappedValue.dismiss()
+                    } label: {
+                        Text("Save")
+                            .basicStyle()
+                    }.padding(.bottom)
+                    .buttonStyle(.plain)
+                }
+
             }
 
         }
-        
     }
 }
 

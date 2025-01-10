@@ -90,10 +90,12 @@ struct WelcomeText: View {
         for event in store.events(matching: predicate) {
             print("EKEVENTS TODAY: \(String(describing: event.title))")
             
-            let newEvent = Object(id: UUID(), eventIdString: event.eventIdentifier, type: .event, name: event.title, completed: true, details: event.notes ?? "", date: event.startDate, startDate: event.startDate, endDate: event.endDate)
+            let newEvent = Object(id: UUID(), eventIdString: event.eventIdentifier, type: .event, name: event.title, completed: false, details: event.notes ?? "", date: event.startDate, startDate: event.startDate, endDate: event.endDate)
             
             for storedEvent in objects.filter( { $0.type == .event } ) {
                 if storedEvent.eventIdString == event.eventIdentifier {
+                    modelContext.delete(storedEvent)
+                } else if storedEvent.date < Date.now {
                     modelContext.delete(storedEvent)
                 }
             }
